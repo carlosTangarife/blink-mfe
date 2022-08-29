@@ -1,0 +1,113 @@
+{
+  "projectType": "application",
+  "sourceRoot": "apps/sign-up/src",
+  "prefix": "blink-mfe",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:webpack-browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/sign-up",
+        "index": "apps/sign-up/src/index.html",
+        "main": "apps/sign-up/src/main.ts",
+        "polyfills": "apps/sign-up/src/polyfills.ts",
+        "tsConfig": "apps/sign-up/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": ["apps/sign-up/src/favicon.ico", "apps/sign-up/src/assets"],
+        "styles": ["apps/sign-up/src/styles.scss"],
+        "scripts": [],
+        "customWebpackConfig": {
+          "path": "apps/sign-up/webpack.config.js"
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/sign-up/src/environments/environment.ts",
+              "with": "apps/sign-up/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all",
+          "customWebpackConfig": {
+            "path": "apps/sign-up/webpack.prod.config.js"
+          }
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@nrwl/angular:webpack-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "sign-up:build:production"
+        },
+        "development": {
+          "browserTarget": "sign-up:build:development"
+        }
+      },
+      "defaultConfiguration": "development",
+      "options": {
+        "port": 4202,
+        "publicHost": "http://localhost:4202"
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "sign-up:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/sign-up/**/*.ts", "apps/sign-up/**/*.html"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/sign-up"],
+      "options": {
+        "jestConfig": "apps/sign-up/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "serve-static": {
+      "executor": "@nrwl/angular:file-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "sign-up:build",
+        "port": 4202
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "sign-up:build:development"
+        },
+        "production": {
+          "buildTarget": "sign-up:build:production"
+        }
+      }
+    }
+  },
+  "tags": []
+}

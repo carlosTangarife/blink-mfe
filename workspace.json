@@ -1,5 +1,12 @@
 {
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
-  "projects": {}
+  "projects": {
+    "host": "apps/host",
+    "host-e2e": "apps/host-e2e",
+    "sign-in": "apps/sign-in",
+    "sign-in-e2e": "apps/sign-in-e2e",
+    "sign-up": "apps/sign-up",
+    "sign-up-e2e": "apps/sign-up-e2e"
+  }
 }

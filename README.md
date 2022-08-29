@@ -32,6 +32,11 @@ Install angular as a framework
 Next, we generate the container application and the remote applications.
     nx g @nrwl/angular:host host --remotes=sign-in,sign-up
 
+    After installing the apps, you will see the following folder structure
+    >> apps>host
+    >> apps>sign-in
+    >> apps>sign-up
+
 Now we can run the host container with static applications
     nx service host
     note that changes can only be seen for host applications only

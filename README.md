@@ -22,64 +22,105 @@ Optimize and modernize your development practices
     @angular-devkit/schematics   13.3.5 (cli-only)
     @schematics/angular          13.3.5 (cli-only)
 ## Installation
-```
-We create an empty workspace
-    npx create-nx-workspace blink-mfe --preset=empty
 
-Install angular as a framework
-    npm install --save-dev @nrwl/angular
-      
-Next, we generate the container application and the remote applications.
-    nx g @nrwl/angular:host host --remotes=sign-in,sign-up
-
-    After installing the apps, you will see the following folder structure
-    >> apps>host
-    >> apps>sign-in
-    >> apps>sign-up
-
-Now we can run the host container with static applications
-    nx service host
-    note that changes can only be seen for host applications only
-    
-whether you want to work together with hot and remote applications, we can run the following command
-    nx serve host —devRemotes=sign-in,sign-up
+### We create an empty workspace
 ```
-## Build
+npx create-nx-workspace blink-mfe --preset=empty
 ```
-    nx build hots
-    nx build sign-in
-    nx build sign-up
+### Install angular as a framework
+```
+npm install --save-dev @nrwl/angular
 ```
 
-## Config webpack.prod.config
+### Next, we generate the container application and the remote applications.
+```
+nx g @nrwl/angular:host host --remotes=sign-in,sign-up
+```
+
+### After installing the apps, you will see the following folder structure
+```
+...
++-- apps
+|   > host
+|   > sign-in
+|   > sign-up
+...
+```
+
+### Now we can run the host container with static applications
+```
+nx serve host --devRemotes=sign-in,sign-up
+```
+
+## Build applications
+```
+nx build sign-in
+nx build sign-up
+```
+
+### Run in production environment
+To simulate a production deployment and host the applications independently, we must install a library that can serve the applications.
+
+```
+npm install -g http-server
+```
+
+#### deploy sign-in to local http-server
+```
+http-server -p 8081 --cors -c-1 ./dist/apps/sign-in
+```
+
+#### deploy sign-up to local http-server
+```
+http-server -p 8082 --cors -c-1 ./dist/apps/sign-up
+```
+
+> Note: `pay attention to each http port,` these are needed to configure the host application in `module-federation.config.js file`
+
+## Go to config webpack.prod.config in host applications
+
+##### ./apps/host/module-federation.config.js
+
 ```
     const { withModuleFederation } = require('@nrwl/angular/module-federation');
     const config = require('./module-federation.config');
     module.exports = withModuleFederation({
       ...config,
-      /*
-       * Remote overrides for production.
-       * Each entry is a pair of an unique name and the URL where it is deployed.
-       *
-       */
-    
       remotes: [
         ['sign-in', 'http://127.0.0.1:8081'],
         ['sign-up', 'http://127.0.0.1:8082'],
       ]
     });
 ```
-## Run Production
+## Run all application with Production environment
 ```
     http-server -p 8080 --cors -c-1 ./dist/apps/host
     http-server -p 8081 --cors -c-1 ./dist/apps/sign-in
     http-server -p 8082 --cors -c-1 ./dist/apps/sign-up
 ```
+# Now it is possible to see all running applications
 
-npm install -D @nrwl/nest
+======================================================
 
-nx g @nrwl/nest:app api-buttons
+# Now let's create and share the library across all apps
+```
+npx nx generate @nrwl/workspace:library shared-module --no-interactive
+```
+### After creating the shared-model, you will see the following folder structure
+```
+...
++-- apps
+|   > host
+|   > sign-in
+|   > sign-up
+...
++-- libs
+|   > shared-model
+```
 
-nx dep-graph
-
-nx affected:graph
+### Now we can use the model by another app, in this case we choose sign-in application
+> and now we will try a command offered by nw to know which application has the shared-model library as a dependency
+```
+    nx affected:graph
+```
+> note `When the browser with the graphics opens, click the show affected projects button to see the library's dependency on other projects`

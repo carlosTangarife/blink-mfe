@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { IButton } from '@blink-mfe/shared-model';
 
 /* eslint-disable */
 
@@ -9,6 +10,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None,
 })
 export class NxWelcomeComponent implements OnInit {
+  configButton: IButton = {
+    text: 'button from sign-in'
+  };
   constructor() {}
 
   ngOnInit(): void {}

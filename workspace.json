@@ -4,6 +4,7 @@
   "projects": {
     "host": "apps/host",
     "host-e2e": "apps/host-e2e",
+    "shared-model": "libs/shared-model",
     "sign-in": "apps/sign-in",
     "sign-in-e2e": "apps/sign-in-e2e",
     "sign-up": "apps/sign-up",

@@ -1,94 +1,80 @@
+# Microfrontends
+## Nx + Angular + Monorepo + Module Federations
 
+[![N|Solid](https://blinkfitness.atlassian.net/s/azc3hx/b/8/cb2080e9b57127c789a674277a9b7d61/_/jira-logo-scaled.png)]()
 
-# BlinkMfe
+## Features
+- Monorepo
+- Micro frontends
+- Ui library
+## Nx
+https://nrwl.io/
+Optimize and modernize your development practices
 
-This project was generated using [Nx](https://nx.dev).
+## Environment
+    Angular CLI: 13.3.5
+    Node: 14.19.2
+    Package Manager: npm 6.14.17
+    OS: darwin x64
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+    @angular-devkit/architect    0.1303.5 (cli-only)
+    @angular-devkit/core         13.3.5 (cli-only)
+    @angular-devkit/schematics   13.3.5 (cli-only)
+    @schematics/angular          13.3.5 (cli-only)
+## Installation
+```
+We create an empty workspace
+    npx create-nx-workspace blink-mfe --preset=empty
 
-🔎 **Smart, Fast and Extensible Build System**
+Install angular as a framework
+    npm install --save-dev @nrwl/angular
+      
+Next, we generate the container application and the remote applications.
+    nx g @nrwl/angular:host host --remotes=sign-in,sign-up
 
-## Adding capabilities to your workspace
-
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
-
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
-
-Below are our core plugins:
-
-- [React](https://reactjs.org)
-  - `npm install --save-dev @nrwl/react`
-- Web (no framework frontends)
-  - `npm install --save-dev @nrwl/web`
-- [Angular](https://angular.io)
-  - `npm install --save-dev @nrwl/angular`
-- [Nest](https://nestjs.com)
-  - `npm install --save-dev @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `npm install --save-dev @nrwl/express`
-- [Node](https://nodejs.org)
-  - `npm install --save-dev @nrwl/node`
-
-There are also many [community plugins](https://nx.dev/community) you could add.
-
-## Generate an application
-
-Run `nx g @nrwl/react:app my-app` to generate an application.
-
-> You can use any of the plugins above to generate applications as well.
-
-When using Nx, you can create multiple applications and libraries in the same workspace.
-
-## Generate a library
-
-Run `nx g @nrwl/react:lib my-lib` to generate a library.
-
-> You can also use any of the plugins above to generate libraries as well.
-
-Libraries are shareable across libraries and applications. They can be imported from `@blink-mfe/mylib`.
-
-## Development server
-
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
-
+Now we can run the host container with static applications
+    nx service host
+    note that changes can only be seen for host applications only
+    
+whether you want to work together with hot and remote applications, we can run the following command
+    nx serve host —devRemotes=sign-in,sign-up
+```
 ## Build
+```
+    nx build hots
+    nx build sign-in
+    nx build sign-up
+```
 
-Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Config webpack.prod.config
+```
+    const { withModuleFederation } = require('@nrwl/angular/module-federation');
+    const config = require('./module-federation.config');
+    module.exports = withModuleFederation({
+      ...config,
+      /*
+       * Remote overrides for production.
+       * Each entry is a pair of an unique name and the URL where it is deployed.
+       *
+       */
+    
+      remotes: [
+        ['sign-in', 'http://127.0.0.1:8081'],
+        ['sign-up', 'http://127.0.0.1:8082'],
+      ]
+    });
+```
+## Run Production
+```
+    http-server -p 8080 --cors -c-1 ./dist/apps/host
+    http-server -p 8081 --cors -c-1 ./dist/apps/sign-in
+    http-server -p 8082 --cors -c-1 ./dist/apps/sign-up
+```
 
-## Running unit tests
+npm install -D @nrwl/nest
 
-Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
+nx g @nrwl/nest:app api-buttons
 
-Run `nx affected:test` to execute the unit tests affected by a change.
+nx dep-graph
 
-## Running end-to-end tests
-
-Run `nx e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev) to learn more.
-
-
-
-## ☁ Nx Cloud
-
-### Distributed Computation Caching & Distributed Task Execution
-
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
+nx affected:graph

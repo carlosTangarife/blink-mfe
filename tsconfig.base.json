@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@blink-mfe/shared-model": ["libs/shared-model/src/index.ts"]
+      "@blink-mfe/shared-model": ["libs/shared-model/src/index.ts"],
+      "@blink-mfe/ui-toolkit": ["libs/ui-toolkit/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -1,0 +1,25 @@
+{
+  "projectType": "library",
+  "sourceRoot": "libs/ui-toolkit/src",
+  "prefix": "blink-mfe",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/ui-toolkit"],
+      "options": {
+        "jestConfig": "libs/ui-toolkit/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/ui-toolkit/**/*.ts",
+          "libs/ui-toolkit/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

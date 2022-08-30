@@ -8,6 +8,7 @@
     "sign-in": "apps/sign-in",
     "sign-in-e2e": "apps/sign-in-e2e",
     "sign-up": "apps/sign-up",
-    "sign-up-e2e": "apps/sign-up-e2e"
+    "sign-up-e2e": "apps/sign-up-e2e",
+    "ui-toolkit": "libs/ui-toolkit"
   }
 }

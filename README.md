@@ -133,3 +133,16 @@ npx nx g @nrwl/angular:component button --project=ui-toolkit --no-interactive --
 nx affected:graph
 ```
 [![N|graph-ui-toolkit.png](./assets/graph-ui-toolkit.png)]()
+
+
+### Commands summary
+```
+1. npx create-nx-workspace blink-mfe --preset=empty
+2. npm install --save-dev @nrwl/angular
+3. nx g @nrwl/angular:host host --remotes=sign-in,sign-up
+4. nx serve host --devRemotes=sign-in,sign-up
+5. npx nx generate @nrwl/workspace:library shared-module --no-interactive
+6. npx nx g @nrwl/angular:library ui-toolkit --no-interactive
+7. npx nx g @nrwl/angular:component button --project=ui-toolkit --no-interactive --export
+8. nx affected:graph
+```

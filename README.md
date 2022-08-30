@@ -38,14 +38,7 @@ nx g @nrwl/angular:host host --remotes=sign-in,sign-up
 ```
 
 ### After installing the apps, you will see the following folder structure
-```
-...
-+-- apps
-|   > host
-|   > sign-in
-|   > sign-up
-...
-```
+[![N|structure-application.png](./assets/structure-application.png)]()
 
 ### Now we can run the host container with static applications
 ```
@@ -124,3 +117,19 @@ npx nx generate @nrwl/workspace:library shared-module --no-interactive
     nx affected:graph
 ```
 > note `When the browser with the graphics opens, click the show affected projects button to see the library's dependency on other projects`
+
+## Now is time to create and share the UI-toolkit library
+```
+npx nx g @nrwl/angular:library ui-toolkit --no-interactive
+```
+
+## Now we can add component ui to the UI-toolkit library
+```
+npx nx g @nrwl/angular:component button --project=ui-toolkit --no-interactive --export
+```
+
+### Take a look at what the dependency tree looks like
+```
+nx affected:graph
+```
+[![N|graph-ui-toolkit.png](./assets/graph-ui-toolkit.png)]()

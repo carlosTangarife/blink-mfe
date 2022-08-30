@@ -4,11 +4,13 @@ import { RouterModule } from '@angular/router';
 
 import { RemoteEntryComponent } from './entry.component';
 import { NxWelcomeComponent } from './nx-welcome.component';
+import { UiToolkitModule } from '@blink-mfe/ui-toolkit';
 
 @NgModule({
   declarations: [RemoteEntryComponent, NxWelcomeComponent],
   imports: [
     CommonModule,
+    UiToolkitModule,
     RouterModule.forChild([
       {
         path: '',

@@ -5,7 +5,10 @@ import { IButton } from '@blink-mfe/shared-model';
 
 @Component({
   selector: 'blink-mfe-nx-welcome',
-  template: `<h1>Hello From sign-in applications</h1>`,
+  template: `
+    <h1>Hello From sign-in applications</h1>
+    <blink-mfe-button [config]="configButton"></blink-mfe-button>
+    `,
   styles: [],
   encapsulation: ViewEncapsulation.None,
 })

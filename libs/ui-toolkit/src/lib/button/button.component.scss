@@ -1,0 +1,8 @@
+button {
+  background-color: var(--primary-color, blue);
+  color: var(--seconday-color, white);
+  margin: var(--margin-default, 15px);
+  padding: var(--padding-default, 5px);
+  border-radius: var(--border-default, 5px);
+  border: 1px solid var(--primary-color, blue);
+}

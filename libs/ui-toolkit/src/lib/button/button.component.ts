@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { IButton } from '@blink-mfe/shared-model';
 
 @Component({
   selector: 'blink-mfe-button',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./button.component.scss'],
 })
 export class ButtonComponent {
-
+  @Input()
+  config?: IButton;
 }
